@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/25.0.2"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.freelanceflow_desktop.LoginController"
+            prefWidth="420"
+            prefHeight="600"
+            style="-fx-background-color: white;">
+
+    <VBox alignment="TOP_CENTER"
+          spacing="18"
+          AnchorPane.topAnchor="80"
+          AnchorPane.leftAnchor="25"
+          AnchorPane.rightAnchor="25"
+          AnchorPane.bottomAnchor="25">
+
+        <!-- App Title -->
+        <Text text="FreeLanceFlow"
+              fill="#2B8994"
+              style="-fx-font-size: 40px; -fx-font-weight: bold;"/>
+
+        <!-- Spacer -->
+        <Region prefHeight="30"/>
+
+        <!-- Email -->
+        <Label text="Email"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <TextField fx:id="emailField"
+                   promptText="Enter your email"
+                   prefHeight="42"
+                   style="-fx-font-size: 14px;"/>
+
+        <!-- Password -->
+        <Label text="Password"
+               style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+        <PasswordField fx:id="passwordField"
+                       promptText="Enter your password"
+                       prefHeight="42"
+                       style="-fx-font-size: 14px;"/>
+
+        <!-- Spacer -->
+        <Region prefHeight="20"/>
+
+        <!-- Login Button -->
+        <Button fx:id="loginButton"
+                text="Login"
+                onAction="#onLogin"
+                prefHeight="55"
+                maxWidth="Infinity"
+                style="-fx-background-color: black;
+                       -fx-text-fill: white;
+                       -fx-font-size: 18px;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 12;"/>
+
+    </VBox>
+
+</AnchorPane>

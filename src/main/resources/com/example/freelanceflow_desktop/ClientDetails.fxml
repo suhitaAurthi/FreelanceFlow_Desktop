@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/25.0.2"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.freelanceflow_desktop.ClientDetailsController"
+            prefWidth="420"
+            prefHeight="700"
+            style="-fx-background-color: white;">
+
+    <ScrollPane fitToWidth="true"
+                AnchorPane.topAnchor="0"
+                AnchorPane.leftAnchor="0"
+                AnchorPane.rightAnchor="0"
+                AnchorPane.bottomAnchor="0"
+                style="-fx-background-color: white;">
+        
+        <VBox alignment="TOP_CENTER"
+              spacing="16"
+              style="-fx-padding: 30 25 25 25;">
+
+            <!-- Title -->
+            <Text text="Client Details"
+                  fill="#2B8994"
+                  style="-fx-font-size: 32px; -fx-font-weight: bold;"/>
+
+            <!-- Spacer -->
+            <Region prefHeight="10"/>
+
+            <!-- Company Logo / Profile Logo -->
+            <VBox alignment="CENTER" spacing="10">
+                <ImageView fx:id="profileImageView"
+                           fitWidth="120"
+                           fitHeight="120"
+                           preserveRatio="true"
+                           style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);"/>
+                
+                <Button fx:id="uploadLogoButton"
+                        text="Upload Company Logo"
+                        onAction="#onUploadLogo"
+                        style="-fx-background-color: #2B8994;
+                               -fx-text-fill: white;
+                               -fx-font-size: 12px;
+                               -fx-padding: 8 16;
+                               -fx-background-radius: 8;"/>
+            </VBox>
+
+            <!-- Display Name -->
+            <Label text="Display Name"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="displayNameField"
+                       promptText="Enter your company/display name"
+                       prefHeight="42"
+                       style="-fx-font-size: 14px;"/>
+
+            <!-- Phone Number -->
+            <Label text="Phone Number"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="phoneField"
+                       promptText="Enter your phone number"
+                       prefHeight="42"
+                       style="-fx-font-size: 14px;"/>
+
+            <!-- Location -->
+            <Label text="Location"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="locationField"
+                       promptText="Enter your location"
+                       prefHeight="42"
+                       style="-fx-font-size: 14px;"/>
+
+            <!-- Project Budget -->
+            <Label text="Project Budget"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+
+            <TextField fx:id="budgetField"
+                       promptText="Enter your typical project budget"
+                       prefHeight="42"
+                       style="-fx-font-size: 14px;"/>
+
+            <!-- Spacer -->
+            <Region prefHeight="20"/>
+
+            <!-- Save and Continue Button -->
+            <Button fx:id="saveButton"
+                    text="Save and Continue"
+                    onAction="#onSaveAndContinue"
+                    prefHeight="55"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: black;
+                           -fx-text-fill: white;
+                           -fx-font-size: 18px;
+                           -fx-font-weight: bold;
+                           -fx-background-radius: 12;"/>
+
+        </VBox>
+    </ScrollPane>
+
+</AnchorPane>

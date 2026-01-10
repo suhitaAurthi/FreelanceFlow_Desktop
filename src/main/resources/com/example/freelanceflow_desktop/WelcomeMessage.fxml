@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/25.0.2"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.freelanceflow_desktop.WelcomeMessageController"
+            fx:id="rootPane"
+            prefWidth="420"
+            prefHeight="600"
+            style="-fx-background-color: white;">
+
+    <VBox alignment="CENTER"
+          spacing="30"
+          AnchorPane.topAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
+          AnchorPane.bottomAnchor="0">
+
+        <!-- Welcome Message -->
+        <VBox alignment="CENTER" spacing="10">
+            <Text text="You are all set!"
+                  fill="#2B8994"
+                  style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            
+            <Text text="Welcome to FreeLance Flow"
+                  fill="#555555"
+                  style="-fx-font-size: 20px;"/>
+        </VBox>
+
+        <!-- Progress Bar -->
+        <ProgressBar fx:id="progressBar"
+                     prefWidth="300"
+                     prefHeight="8"
+                     progress="0"
+                     style="-fx-accent: #2B8994;"/>
+
+    </VBox>
+
+</AnchorPane>

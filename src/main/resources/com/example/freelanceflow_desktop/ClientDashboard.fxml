@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25.0.2"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.freelanceflow_desktop.ClientDashboardController"
+            prefWidth="900"
+            prefHeight="700"
+            style="-fx-background-color: #f5f5f5;">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox style="-fx-background-color: #2B8994; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
+            <Text text="FreeLanceFlow - Client Dashboard"
+                  fill="white"
+                  style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="welcomeLabel" text="Welcome, Client!"
+                   style="-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Button text="Logout" onAction="#onLogout"
+                    style="-fx-background-color: white; -fx-text-fill: #2B8994; -fx-font-weight: bold; -fx-padding: 8 16;"/>
+        </HBox>
+    </top>
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox style="-fx-background-color: white; -fx-padding: 20;" spacing="10" prefWidth="200">
+            <Button fx:id="postJobBtn" text="Post Job"
+                    onAction="#showPostJobView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #2B8994; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8;"/>
+            
+            <Button fx:id="myJobsBtn" text="My Jobs"
+                    onAction="#showMyJobsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #E0E0E0; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8;"/>
+            
+            <Button fx:id="teamsBtn" text="Browse Teams"
+                    onAction="#showTeamsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #E0E0E0; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8;"/>
+            
+            <Button fx:id="applicationsBtn" text="Applications"
+                    onAction="#showApplicationsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #E0E0E0; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8;"/>
+        </VBox>
+    </left>
+
+    <!-- Center Content Area -->
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-padding: 20;">
+            <!-- Post Job View -->
+            <VBox fx:id="postJobView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
+                <Text text="Post a New Job"
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2B8994;"/>
+                
+                <Label text="Job Title" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="jobTitleField" promptText="Enter job title" prefHeight="40"/>
+                
+                <Label text="Job Description" style="-fx-font-weight: bold;"/>
+                <TextArea fx:id="jobDescriptionArea" promptText="Describe the job requirements..." prefHeight="100"/>
+                
+                <Label text="Budget" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="jobBudgetField" promptText="Enter budget (e.g., $500)" prefHeight="40"/>
+                
+                <Label text="Duration" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="jobDurationField" promptText="Expected duration (e.g., 2 weeks)" prefHeight="40"/>
+                
+                <Label text="Skills Required" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="jobSkillsField" promptText="e.g., Java, React, UI/UX Design" prefHeight="40"/>
+                
+                <Button text="Post Job" onAction="#onPostJob"
+                        style="-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 12 40; -fx-background-radius: 8;"/>
+            </VBox>
+
+            <!-- My Jobs View -->
+            <VBox fx:id="myJobsView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;" visible="false">
+                <Text text="My Posted Jobs"
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2B8994;"/>
+                <ScrollPane fitToWidth="true" prefHeight="500">
+                    <VBox fx:id="myJobsList" spacing="10"/>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Browse Teams View -->
+            <VBox fx:id="teamsView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;" visible="false">
+                <Text text="Browse Teams for Collaboration"
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2B8994;"/>
+                <ScrollPane fitToWidth="true" prefHeight="500">
+                    <VBox fx:id="teamsList" spacing="10"/>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Applications View -->
+            <VBox fx:id="applicationsView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;" visible="false">
+                <Text text="My Team Applications"
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2B8994;"/>
+                <ScrollPane fitToWidth="true" prefHeight="500">
+                    <VBox fx:id="applicationsList" spacing="10"/>
+                </ScrollPane>
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>

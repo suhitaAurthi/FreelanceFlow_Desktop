@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/25.0.2"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.freelanceflow_desktop.WelcomePageController"
+            prefWidth="420"
+            prefHeight="600"
+            style="-fx-background-color: white;">
+
+    <VBox alignment="TOP_CENTER"
+          spacing="20"
+          AnchorPane.topAnchor="40"
+          AnchorPane.leftAnchor="25"
+          AnchorPane.rightAnchor="25"
+          AnchorPane.bottomAnchor="25">
+
+        <!-- App Title -->
+        <Text text="FreeLanceFlow"
+              fill="#2B8994"
+              style="-fx-font-size: 40px; -fx-font-weight: bold;"/>
+
+        <!-- Subtitle -->
+        <Text text="Find projects, get hired and get paid!"
+              fill="#555555"
+              style="-fx-font-size: 16px;"
+              textAlignment="CENTER"
+              wrappingWidth="350"/>
+
+        <!-- Spacer -->
+        <Region prefHeight="20"/>
+
+        <!-- Role Choice Label -->
+        <Label text="Choose your role:"
+               style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        <!-- Role Buttons -->
+        <HBox spacing="15" alignment="CENTER">
+            <Button fx:id="clientButton"
+                    text="I am a client"
+                    onAction="#onClientSelected"
+                    prefHeight="50"
+                    prefWidth="160"
+                    style="-fx-background-color: #E0E0E0;
+                           -fx-text-fill: #555555;
+                           -fx-font-size: 14px;
+                           -fx-font-weight: bold;
+                           -fx-background-radius: 10;"/>
+
+            <Button fx:id="freelancerButton"
+                    text="I am a freelancer"
+                    onAction="#onFreelancerSelected"
+                    prefHeight="50"
+                    prefWidth="160"
+                    style="-fx-background-color: #E0E0E0;
+                           -fx-text-fill: #555555;
+                           -fx-font-size: 14px;
+                           -fx-font-weight: bold;
+                           -fx-background-radius: 10;"/>
+        </HBox>
+
+        <!-- Spacer -->
+        <Region prefHeight="30"/>
+
+        <!-- Create Account Button -->
+        <Button fx:id="createAccountButton"
+                text="Create Account"
+                onAction="#onCreateAccount"
+                prefHeight="55"
+                maxWidth="Infinity"
+                style="-fx-background-color: black;
+                       -fx-text-fill: white;
+                       -fx-font-size: 18px;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 12;"/>
+
+        <!-- Spacer to push footer to bottom -->
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <!-- Footer -->
+        <HBox alignment="CENTER" spacing="5">
+            <Label text="Already have an account?"
+                   style="-fx-font-size: 14px;"
+                   textFill="#555555"/>
+            <Label fx:id="loginLabel"
+                   text="Login"
+                   onMouseClicked="#onLoginClicked"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand;"
+                   textFill="#2B8994"/>
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>

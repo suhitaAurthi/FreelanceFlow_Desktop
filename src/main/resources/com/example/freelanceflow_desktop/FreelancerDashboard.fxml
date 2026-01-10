@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/25.0.2"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.freelanceflow_desktop.FreelancerDashboardController"
+            style="-fx-background-color: #F8F9FA;">
+
+    <!-- Top Navigation Bar -->
+    <top>
+        <VBox>
+            <HBox style="-fx-background-color: linear-gradient(to right, #2B8994, #1E6470); -fx-padding: 20 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);" alignment="CENTER_LEFT" spacing="20">
+                <Text text="FreeLanceFlow"
+                      fill="white"
+                      style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label fx:id="welcomeLabel" text="Welcome, Freelancer!"
+                       style="-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: 600;"/>
+                <Button text="Logout" onAction="#onLogout"
+                        style="-fx-background-color: white; -fx-text-fill: #2B8994; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 20; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);"/>
+            </HBox>
+            
+            <!-- Quick Stats Bar -->
+            <HBox style="-fx-background-color: white; -fx-padding: 15 30; -fx-border-color: #E0E0E0; -fx-border-width: 0 0 1 0;" spacing="40" alignment="CENTER_LEFT">
+                <VBox spacing="3">
+                    <Label text="My Teams" style="-fx-text-fill: #666; -fx-font-size: 11px;"/>
+                    <Label fx:id="teamsCountLabel" text="0" style="-fx-text-fill: #2B8994; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Active Jobs" style="-fx-text-fill: #666; -fx-font-size: 11px;"/>
+                    <Label fx:id="jobsCountLabel" text="0" style="-fx-text-fill: #2B8994; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Recruitments" style="-fx-text-fill: #666; -fx-font-size: 11px;"/>
+                    <Label fx:id="recruitmentsCountLabel" text="0" style="-fx-text-fill: #2B8994; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- Left Sidebar Navigation -->
+    <left>
+        <VBox style="-fx-background-color: white; -fx-padding: 25 15; -fx-border-color: #E0E0E0; -fx-border-width: 0 1 0 0;" spacing="8" prefWidth="220">
+            <Label text="NAVIGATION" style="-fx-text-fill: #999; -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 10 15 5 15;"/>
+            
+            <Button fx:id="myTeamsBtn" text="My Teams"
+                    onAction="#showMyTeamsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #2B8994; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 15; -fx-background-radius: 8; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            
+            <Button fx:id="createTeamBtn" text="Create Team"
+                    onAction="#showCreateTeamView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 15; -fx-background-radius: 8; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            
+            <Button fx:id="browseTeamsBtn" text="Browse Teams"
+                    onAction="#showBrowseTeamsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 15; -fx-background-radius: 8; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            
+            <Separator style="-fx-padding: 10 0;"/>
+            
+            <Button fx:id="jobsBtn" text="Browse Jobs"
+                    onAction="#showJobsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 15; -fx-background-radius: 8; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            
+            <Button fx:id="recruitmentsBtn" text="Recruitments"
+                    onAction="#showRecruitmentsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 15; -fx-background-radius: 8; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+        </VBox>
+    </left>
+
+    <!-- Main Content Area -->
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-padding: 30;">
+            
+            <!-- My Teams View -->
+            <VBox fx:id="myTeamsView" spacing="20" style="-fx-background-color: transparent;">
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Text text="My Teams"
+                          style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #1E6470;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="+ Create New Team" onAction="#showCreateTeamView"
+                            style="-fx-background-color: #2B8994; -fx-text-fill: white; -fx-font-size: 13px; -fx-padding: 10 20; -fx-background-radius: 20; -fx-cursor: hand;"/>
+                </HBox>
+                
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" pannable="true">
+                    <VBox fx:id="myTeamsList" spacing="15" style="-fx-background-color: transparent;"/>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Create Team View -->
+            <VBox fx:id="createTeamView" spacing="25" style="-fx-background-color: white; -fx-padding: 40; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" visible="false" maxWidth="700">
+                <Text text="Create a New Team"
+                      style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #1E6470;"/>
+                
+                <VBox spacing="8">
+                    <Label text="Team Name *" style="-fx-font-weight: 600; -fx-text-fill: #333;"/>
+                    <TextField fx:id="teamNameField" promptText="e.g., Web Development Experts" 
+                               style="-fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #DDD; -fx-border-radius: 8;"/>
+                </VBox>
+                
+                <VBox spacing="8">
+                    <Label text="Team Description *" style="-fx-font-weight: 600; -fx-text-fill: #333;"/>
+                    <TextArea fx:id="teamDescriptionArea" promptText="Describe your team's mission, goals, and what makes it unique..." 
+                              wrapText="true" prefHeight="120"
+                              style="-fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #DDD; -fx-border-radius: 8;"/>
+                </VBox>
+                
+                <HBox spacing="15">
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                        <Label text="Required Skills" style="-fx-font-weight: 600; -fx-text-fill: #333;"/>
+                        <TextField fx:id="teamSkillsField" promptText="e.g., Java, React, UI/UX" 
+                                   style="-fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #DDD; -fx-border-radius: 8;"/>
+                    </VBox>
+                    
+                    <VBox spacing="8" prefWidth="150">
+                        <Label text="Max Members" style="-fx-font-weight: 600; -fx-text-fill: #333;"/>
+                        <TextField fx:id="teamMaxMembersField" promptText="e.g., 5" 
+                                   style="-fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8; -fx-border-color: #DDD; -fx-border-radius: 8;"/>
+                    </VBox>
+                </HBox>
+                
+                <HBox spacing="15" alignment="CENTER_RIGHT">
+                    <Button text="Cancel" onAction="#showMyTeamsView"
+                            style="-fx-background-color: #E0E0E0; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 12 30; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                    <Button text="Create Team" onAction="#onCreateTeam"
+                            style="-fx-background-color: #2B8994; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12 30; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                </HBox>
+            </VBox>
+
+            <!-- Browse Teams View -->
+            <VBox fx:id="browseTeamsView" spacing="20" style="-fx-background-color: transparent;" visible="false">
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Text text="Browse &amp; Join Teams"
+                          style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #1E6470;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField promptText="Search teams..." prefWidth="250"
+                               style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 20; -fx-border-color: #DDD; -fx-border-radius: 20;"/>
+                </HBox>
+                
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" pannable="true">
+                    <VBox fx:id="browseTeamsList" spacing="15" style="-fx-background-color: transparent;"/>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Recruitments View -->
+            <VBox fx:id="recruitmentsView" spacing="20" style="-fx-background-color: transparent;" visible="false">
+                <Text text="Team Recruitment Posts"
+                      style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #1E6470;"/>
+                
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" pannable="true">
+                    <VBox fx:id="recruitmentsList" spacing="15" style="-fx-background-color: transparent;"/>
+                </ScrollPane>
+            </VBox>
+
+            <!-- Browse Jobs View -->
+            <VBox fx:id="jobsView" spacing="20" style="-fx-background-color: transparent;" visible="false">
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Text text="Available Jobs"
+                          style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #1E6470;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField promptText="Search jobs..." prefWidth="250"
+                               style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 20; -fx-border-color: #DDD; -fx-border-radius: 20;"/>
+                </HBox>
+                
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" pannable="true">
+                    <VBox fx:id="jobsList" spacing="15" style="-fx-background-color: transparent;"/>
+                </ScrollPane>
+            </VBox>
+            
+        </StackPane>
+    </center>
+
+</BorderPane>
