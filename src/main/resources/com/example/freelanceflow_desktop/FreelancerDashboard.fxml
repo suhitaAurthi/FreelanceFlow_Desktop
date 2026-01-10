@@ -18,6 +18,10 @@
                       fill="white"
                       style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
                 <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="notificationsBtn" text="🔔 Notifications" onAction="#showNotifications"
+                        style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 16; -fx-background-radius: 15; -fx-cursor: hand;"/>
+                <Label fx:id="notificationBadge" text="0" visible="false"
+                       style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 2 6; -fx-background-radius: 10; -fx-translate-x: -40; -fx-translate-y: -10;"/>
                 <Label fx:id="welcomeLabel" text="Welcome, Freelancer!"
                        style="-fx-text-fill: white; -fx-font-size: 15px; -fx-font-weight: 600;"/>
                 <Button text="Logout" onAction="#onLogout"

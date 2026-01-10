@@ -82,13 +82,13 @@ public class FreelancerDetailsController {
             System.out.println("Warning: Failed to save to database, but continuing to dashboard...");
         }
         
-        // Navigate to dashboard regardless of database save status
-        navigateToFreelancerDashboard();
+        // Navigate to team dashboard
+        navigateToTeamDashboard();
     }
 
-    private void navigateToFreelancerDashboard() {
+    private void navigateToTeamDashboard() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FreelancerDashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("TeamDashboard.fxml"));
             Parent root = loader.load();
             
             Stage stage = (Stage) displayNameField.getScene().getWindow();
@@ -99,7 +99,7 @@ public class FreelancerDetailsController {
             
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error", "Failed to load dashboard: " + e.getMessage(), AlertType.ERROR);
+            showAlert("Error", "Failed to load team dashboard: " + e.getMessage(), AlertType.ERROR);
         }
     }
 

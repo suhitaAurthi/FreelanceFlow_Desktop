@@ -1,5 +1,6 @@
 package com.example.freelanceflow_desktop;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,27 +13,37 @@ public class DatabaseManager {
     public static Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
+                System.out.println("=== DATABASE CONNECTION ATTEMPT ===");
+                
+                // Get absolute path for database file
+                File dbFile = new File("freelanceflow.db");
+                System.out.println("Database file path: " + dbFile.getAbsolutePath());
+                System.out.println("Database file exists: " + dbFile.exists());
+                
                 try {
                     // Try to load the SQLite JDBC driver
                     Class.forName("org.sqlite.JDBC");
-                    System.out.println("SQLite JDBC Driver loaded successfully!");
+                    System.out.println("✓ SQLite JDBC Driver loaded successfully!");
                 } catch (ClassNotFoundException e) {
-                    System.err.println("SQLite JDBC Driver not found!");
-                    System.err.println("Make sure sqlite-jdbc dependency is in pom.xml");
+                    System.err.println("✗ SQLite JDBC Driver not found!");
+                    System.err.println("Make sure sqlite-jdbc dependency is in pom.xml and project is rebuilt");
                     e.printStackTrace();
-                    
-                    // Try without explicit driver loading (JDBC 4.0+)
-                    System.out.println("Attempting connection without explicit driver loading...");
                 }
                 
+                System.out.println("Attempting to connect to: " + DB_URL);
                 connection = DriverManager.getConnection(DB_URL);
-                System.out.println("Database connection established!");
-                System.out.println("Database URL: " + DB_URL);
-                initializeDatabase();
+                
+                if (connection != null) {
+                    System.out.println("✓ Database connection established successfully!");
+                    System.out.println("✓ Connection is valid: " + connection.isValid(5));
+                    initializeDatabase();
+                } else {
+                    System.err.println("✗ Connection returned null!");
+                }
             }
             return connection;
         } catch (SQLException e) {
-            System.err.println("Error connecting to database: " + e.getMessage());
+            System.err.println("✗ Error connecting to database: " + e.getMessage());
             System.err.println("Database URL attempted: " + DB_URL);
             e.printStackTrace();
             return null;
@@ -81,10 +92,54 @@ public class DatabaseManager {
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 )
             """;
+            
+            // Create teams table
+            String createTeamsTable = """
+                CREATE TABLE IF NOT EXISTS teams (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    description TEXT,
+                    skills TEXT,
+                    max_members INTEGER,
+                    admin_id INTEGER NOT NULL,
+                    created_date TEXT,
+                    FOREIGN KEY (admin_id) REFERENCES users(id)
+                )
+            """;
+            
+            // Create team_members table
+            String createTeamMembersTable = """
+                CREATE TABLE IF NOT EXISTS team_members (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    team_id INTEGER NOT NULL,
+                    user_id INTEGER NOT NULL,
+                    role TEXT NOT NULL,
+                    joined_date TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(id),
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                )
+            """;
+            
+            // Create notifications table
+            String createNotificationsTable = """
+                CREATE TABLE IF NOT EXISTS notifications (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    type TEXT NOT NULL,
+                    message TEXT NOT NULL,
+                    related_id TEXT,
+                    is_read INTEGER DEFAULT 0,
+                    created_date TEXT,
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                )
+            """;
 
             stmt.execute(createUsersTable);
             stmt.execute(createFreelancerTable);
             stmt.execute(createClientTable);
+            stmt.execute(createTeamsTable);
+            stmt.execute(createTeamMembersTable);
+            stmt.execute(createNotificationsTable);
 
             System.out.println("Database initialized successfully!");
         } catch (SQLException e) {

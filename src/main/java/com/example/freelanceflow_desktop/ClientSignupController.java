@@ -27,7 +27,7 @@ public class ClientSignupController {
         String firstName = firstNameField.getText().trim();
         String lastName = lastNameField.getText().trim();
         String email = emailField.getText().trim();
-        String password = passwordField.getText();
+        String password = passwordField.getText().trim();
 
         // Validate fields
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
