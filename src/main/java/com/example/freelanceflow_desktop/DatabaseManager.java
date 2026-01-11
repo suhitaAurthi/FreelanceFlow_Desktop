@@ -7,7 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:sqlite:freelanceflow.db";
+    // Use absolute path in user's home directory to ensure consistent database location
+    private static final String DB_DIR = System.getProperty("user.home") + File.separator + ".freelanceflow";
+    private static final String DB_FILE = DB_DIR + File.separator + "freelanceflow.db";
+    private static final String DB_URL = "jdbc:sqlite:" + DB_FILE;
     private static Connection connection = null;
 
     public static Connection getConnection() {
@@ -15,8 +18,15 @@ public class DatabaseManager {
             if (connection == null || connection.isClosed()) {
                 System.out.println("=== DATABASE CONNECTION ATTEMPT ===");
                 
+                // Create database directory if it doesn't exist
+                File dbDirectory = new File(DB_DIR);
+                if (!dbDirectory.exists()) {
+                    boolean created = dbDirectory.mkdirs();
+                    System.out.println("Database directory created: " + created);
+                }
+                
                 // Get absolute path for database file
-                File dbFile = new File("freelanceflow.db");
+                File dbFile = new File(DB_FILE);
                 System.out.println("Database file path: " + dbFile.getAbsolutePath());
                 System.out.println("Database file exists: " + dbFile.exists());
                 
@@ -133,6 +143,118 @@ public class DatabaseManager {
                     FOREIGN KEY (user_id) REFERENCES users(id)
                 )
             """;
+            
+            // Create projects table
+            String createProjectsTable = """
+                CREATE TABLE IF NOT EXISTS projects (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    team_id INTEGER NOT NULL,
+                    name TEXT NOT NULL,
+                    description TEXT,
+                    status TEXT DEFAULT 'Active',
+                    start_date TEXT,
+                    end_date TEXT,
+                    created_by INTEGER NOT NULL,
+                    created_date TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(id),
+                    FOREIGN KEY (created_by) REFERENCES users(id)
+                )
+            """;
+            
+            // Create recruitment_posts table
+            String createRecruitmentPostsTable = """
+                CREATE TABLE IF NOT EXISTS recruitment_posts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    team_id INTEGER NOT NULL,
+                    title TEXT NOT NULL,
+                    description TEXT,
+                    required_skills TEXT,
+                    positions INTEGER DEFAULT 1,
+                    status TEXT DEFAULT 'Open',
+                    created_by INTEGER NOT NULL,
+                    created_date TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(id),
+                    FOREIGN KEY (created_by) REFERENCES users(id)
+                )
+            """;
+            
+            // Create team_invitations table
+            String createTeamInvitationsTable = """
+                CREATE TABLE IF NOT EXISTS team_invitations (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    team_id INTEGER NOT NULL,
+                    user_id INTEGER NOT NULL,
+                    invited_by INTEGER NOT NULL,
+                    status TEXT DEFAULT 'Pending',
+                    invited_date TEXT,
+                    response_date TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(id),
+                    FOREIGN KEY (user_id) REFERENCES users(id),
+                    FOREIGN KEY (invited_by) REFERENCES users(id)
+                )
+            """;
+            
+            // Create jobs table
+            String createJobsTable = """
+                CREATE TABLE IF NOT EXISTS jobs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    client_id INTEGER NOT NULL,
+                    title TEXT NOT NULL,
+                    description TEXT,
+                    budget TEXT,
+                    duration TEXT,
+                    skills TEXT,
+                    status TEXT DEFAULT 'Open',
+                    posted_date TEXT,
+                    FOREIGN KEY (client_id) REFERENCES users(id)
+                )
+            """;
+            
+            // Create service_posts table
+            String createServicePostsTable = """
+                CREATE TABLE IF NOT EXISTS service_posts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    team_id INTEGER NOT NULL,
+                    title TEXT NOT NULL,
+                    description TEXT,
+                    category TEXT,
+                    pricing TEXT,
+                    delivery_time TEXT,
+                    status TEXT DEFAULT 'Active',
+                    created_by INTEGER NOT NULL,
+                    created_date TEXT,
+                    FOREIGN KEY (team_id) REFERENCES teams(id),
+                    FOREIGN KEY (created_by) REFERENCES users(id)
+                )
+            """;
+            
+            // Create job_applications table (when teams apply for client jobs)
+            String createJobApplicationsTable = """
+                CREATE TABLE IF NOT EXISTS job_applications (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    job_id INTEGER NOT NULL,
+                    team_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'Pending',
+                    applied_date TEXT,
+                    response_date TEXT,
+                    FOREIGN KEY (job_id) REFERENCES jobs(id),
+                    FOREIGN KEY (team_id) REFERENCES teams(id)
+                )
+            """;
+            
+            // Create service_requests table (when clients request team services)
+            String createServiceRequestsTable = """
+                CREATE TABLE IF NOT EXISTS service_requests (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    service_id INTEGER NOT NULL,
+                    client_id INTEGER NOT NULL,
+                    status TEXT DEFAULT 'Pending',
+                    request_date TEXT,
+                    response_date TEXT,
+                    FOREIGN KEY (service_id) REFERENCES service_posts(id),
+                    FOREIGN KEY (client_id) REFERENCES users(id)
+                )
+            """;
 
             stmt.execute(createUsersTable);
             stmt.execute(createFreelancerTable);
@@ -140,6 +262,13 @@ public class DatabaseManager {
             stmt.execute(createTeamsTable);
             stmt.execute(createTeamMembersTable);
             stmt.execute(createNotificationsTable);
+            stmt.execute(createProjectsTable);
+            stmt.execute(createRecruitmentPostsTable);
+            stmt.execute(createTeamInvitationsTable);
+            stmt.execute(createJobsTable);
+            stmt.execute(createServicePostsTable);
+            stmt.execute(createJobApplicationsTable);
+            stmt.execute(createServiceRequestsTable);
 
             System.out.println("Database initialized successfully!");
         } catch (SQLException e) {

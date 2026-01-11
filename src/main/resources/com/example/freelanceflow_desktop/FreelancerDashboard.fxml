@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/25.0.2"
             xmlns:fx="http://javafx.com/fxml"
@@ -14,6 +15,8 @@
     <top>
         <VBox>
             <HBox style="-fx-background-color: linear-gradient(to right, #2B8994, #1E6470); -fx-padding: 20 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);" alignment="CENTER_LEFT" spacing="20">
+                <ImageView fx:id="profileImageView" fitHeight="45" fitWidth="45" preserveRatio="true"
+                           style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 6, 0, 0, 0);" />
                 <Text text="FreeLanceFlow"
                       fill="white"
                       style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';"/>
@@ -55,6 +58,11 @@
                     onAction="#showMyTeamsView"
                     maxWidth="Infinity"
                     style="-fx-background-color: #2B8994; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 15; -fx-background-radius: 8; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            
+            <Button fx:id="projectsBtn" text="My Projects"
+                    onAction="#showProjectsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 15; -fx-background-radius: 8; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
             
             <Button fx:id="createTeamBtn" text="Create Team"
                     onAction="#showCreateTeamView"
@@ -145,7 +153,7 @@
                     <Text text="Browse &amp; Join Teams"
                           style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #1E6470;"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <TextField promptText="Search teams..." prefWidth="250"
+                    <TextField fx:id="searchTeamsField" promptText="Search teams..." prefWidth="250"
                                style="-fx-font-size: 13px; -fx-padding: 10; -fx-background-radius: 20; -fx-border-color: #DDD; -fx-border-radius: 20;"/>
                 </HBox>
                 
@@ -176,6 +184,16 @@
                 
                 <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" pannable="true">
                     <VBox fx:id="jobsList" spacing="15" style="-fx-background-color: transparent;"/>
+                </ScrollPane>
+            </VBox>
+            
+            <!-- My Projects View -->
+            <VBox fx:id="projectsView" spacing="20" style="-fx-background-color: transparent;" visible="false">
+                <Text text="My Projects"
+                      style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #1E6470;"/>
+                
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" pannable="true">
+                    <VBox fx:id="projectsList" spacing="15" style="-fx-background-color: transparent;"/>
                 </ScrollPane>
             </VBox>
             

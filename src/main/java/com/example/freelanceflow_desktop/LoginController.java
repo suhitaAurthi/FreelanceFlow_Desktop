@@ -22,11 +22,11 @@ public class LoginController {
     @FXML
     protected void onLogin() {
         String email = emailField.getText().trim();
-        String password = passwordField.getText().trim();
+        String password = passwordField.getText();  // Don't trim yet
 
         System.out.println("=== LOGIN ATTEMPT ===");
         System.out.println("Email entered: '" + email + "'");
-        System.out.println("Password entered: '" + password + "' (length: " + password.length() + ")");
+        System.out.println("Password entered (raw): '" + password + "' (length: " + password.length() + ")");
 
         // Validate fields
         if (email.isEmpty() || password.isEmpty()) {
@@ -46,13 +46,33 @@ public class LoginController {
         
         System.out.println("User details - Email: " + user.getEmail() + ", Role: " + user.getRole());
         
-        // Trim stored password as well for comparison
-        String storedPassword = user.getPassword().trim();
+        // Get stored password
+        String storedPassword = user.getPassword();
         
-        System.out.println("Stored password: '" + storedPassword + "' (length: " + storedPassword.length() + ")");
-        System.out.println("Passwords match: " + storedPassword.equals(password));
+        System.out.println("Stored password (raw): '" + storedPassword + "' (length: " + storedPassword.length() + ")");
         
-        if (!storedPassword.equals(password)) {
+        // Try multiple comparison strategies to handle legacy passwords
+        boolean passwordMatch = false;
+        
+        // Strategy 1: Exact match (no trimming)
+        if (storedPassword.equals(password)) {
+            passwordMatch = true;
+            System.out.println("Match strategy: Exact match");
+        }
+        // Strategy 2: Both trimmed
+        else if (storedPassword.trim().equals(password.trim())) {
+            passwordMatch = true;
+            System.out.println("Match strategy: Both trimmed");
+        }
+        // Strategy 3: Stored trimmed vs raw input
+        else if (storedPassword.trim().equals(password)) {
+            passwordMatch = true;
+            System.out.println("Match strategy: Stored trimmed");
+        }
+        
+        System.out.println("Passwords match: " + passwordMatch);
+        
+        if (!passwordMatch) {
             showAlert("Error", "Incorrect password!", AlertType.ERROR);
             return;
         }

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/25.0.2"
             xmlns:fx="http://javafx.com/fxml"
@@ -13,7 +14,9 @@
 
     <!-- Top Bar -->
     <top>
-        <HBox style="-fx-background-color: #2B8994; -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
+        <HBox style="-fx-background-color: linear-gradient(to right, #1E3A8A, #10B981); -fx-padding: 15;" spacing="20" alignment="CENTER_LEFT">
+            <ImageView fx:id="profileImageView" fitHeight="40" fitWidth="40" preserveRatio="true"
+                       style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 0);" />
             <Text text="FreeLanceFlow - Client Dashboard"
                   fill="white"
                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
@@ -21,7 +24,7 @@
             <Label fx:id="welcomeLabel" text="Welcome, Client!"
                    style="-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
             <Button text="Logout" onAction="#onLogout"
-                    style="-fx-background-color: white; -fx-text-fill: #2B8994; -fx-font-weight: bold; -fx-padding: 8 16;"/>
+                    style="-fx-background-color: white; -fx-text-fill: #1E3A8A; -fx-font-weight: bold; -fx-padding: 8 16;"/>
         </HBox>
     </top>
 
@@ -31,7 +34,7 @@
             <Button fx:id="postJobBtn" text="Post Job"
                     onAction="#showPostJobView"
                     maxWidth="Infinity"
-                    style="-fx-background-color: #2B8994; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8;"/>
+                    style="-fx-background-color: #1E3A8A; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8;"/>
             
             <Button fx:id="myJobsBtn" text="My Jobs"
                     onAction="#showMyJobsView"
@@ -40,6 +43,11 @@
             
             <Button fx:id="teamsBtn" text="Browse Teams"
                     onAction="#showTeamsView"
+                    maxWidth="Infinity"
+                    style="-fx-background-color: #E0E0E0; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8;"/>
+            
+            <Button fx:id="servicesBtn" text="Browse Services"
+                    onAction="#showServicesView"
                     maxWidth="Infinity"
                     style="-fx-background-color: #E0E0E0; -fx-text-fill: #333; -fx-font-size: 14px; -fx-padding: 12; -fx-background-radius: 8;"/>
             
@@ -56,7 +64,7 @@
             <!-- Post Job View -->
             <VBox fx:id="postJobView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;">
                 <Text text="Post a New Job"
-                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2B8994;"/>
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #1E3A8A;"/>
                 
                 <Label text="Job Title" style="-fx-font-weight: bold;"/>
                 <TextField fx:id="jobTitleField" promptText="Enter job title" prefHeight="40"/>
@@ -74,13 +82,13 @@
                 <TextField fx:id="jobSkillsField" promptText="e.g., Java, React, UI/UX Design" prefHeight="40"/>
                 
                 <Button text="Post Job" onAction="#onPostJob"
-                        style="-fx-background-color: black; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 12 40; -fx-background-radius: 8;"/>
+                        style="-fx-background-color: #10B981; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 12 40; -fx-background-radius: 8;"/>
             </VBox>
 
             <!-- My Jobs View -->
             <VBox fx:id="myJobsView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;" visible="false">
                 <Text text="My Posted Jobs"
-                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2B8994;"/>
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #1E3A8A;"/>
                 <ScrollPane fitToWidth="true" prefHeight="500">
                     <VBox fx:id="myJobsList" spacing="10"/>
                 </ScrollPane>
@@ -89,16 +97,25 @@
             <!-- Browse Teams View -->
             <VBox fx:id="teamsView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;" visible="false">
                 <Text text="Browse Teams for Collaboration"
-                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2B8994;"/>
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #1E3A8A;"/>
                 <ScrollPane fitToWidth="true" prefHeight="500">
                     <VBox fx:id="teamsList" spacing="10"/>
+                </ScrollPane>
+            </VBox>
+            
+            <!-- Browse Services View -->
+            <VBox fx:id="servicesView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;" visible="false">
+                <Text text="Browse Team Services"
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #1E3A8A;"/>
+                <ScrollPane fitToWidth="true" prefHeight="500">
+                    <VBox fx:id="servicesList" spacing="10"/>
                 </ScrollPane>
             </VBox>
 
             <!-- Applications View -->
             <VBox fx:id="applicationsView" spacing="15" style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 10;" visible="false">
                 <Text text="My Team Applications"
-                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2B8994;"/>
+                      style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #1E3A8A;"/>
                 <ScrollPane fitToWidth="true" prefHeight="500">
                     <VBox fx:id="applicationsList" spacing="10"/>
                 </ScrollPane>

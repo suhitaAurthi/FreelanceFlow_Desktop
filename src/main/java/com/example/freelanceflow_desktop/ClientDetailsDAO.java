@@ -34,4 +34,26 @@ public class ClientDetailsDAO {
         }
         return false;
     }
-}
+    
+    /**
+     * Get profile photo path for a client user
+     */
+    public static String getProfilePhotoPath(int userId) {
+        String sql = "SELECT company_logo_path FROM client_details WHERE user_id = ?";
+        
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getString("company_logo_path");
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error fetching client photo: " + e.getMessage());
+        }
+        
+        return null;
+    }}

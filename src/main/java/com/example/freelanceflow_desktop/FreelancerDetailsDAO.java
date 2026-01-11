@@ -34,4 +34,26 @@ public class FreelancerDetailsDAO {
         }
         return false;
     }
-}
+    
+    /**
+     * Get profile photo path for a freelancer user
+     */
+    public static String getProfilePhotoPath(int userId) {
+        String sql = "SELECT profile_photo_path FROM freelancer_details WHERE user_id = ?";
+        
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getString("profile_photo_path");
+            }
+            
+        } catch (SQLException e) {
+            System.err.println("Error fetching freelancer photo: " + e.getMessage());
+        }
+        
+        return null;
+    }}

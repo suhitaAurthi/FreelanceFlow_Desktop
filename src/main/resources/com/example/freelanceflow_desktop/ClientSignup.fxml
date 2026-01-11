@@ -20,7 +20,7 @@
 
         <!-- App Title -->
         <Text text="FreeLanceFlow"
-              fill="#2B8994"
+              fill="#1E3A8A"
               style="-fx-font-size: 36px; -fx-font-weight: bold;"/>
 
         <!-- Subtitle -->

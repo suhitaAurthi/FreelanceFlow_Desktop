@@ -252,6 +252,26 @@ public class TeamDAO {
         return members;
     }
     
+    public static int getTeamMemberCount(int teamId) {
+        String sql = "SELECT COUNT(*) FROM team_members WHERE team_id = ?";
+        
+        try (Connection conn = DatabaseManager.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, teamId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error getting team member count: " + e.getMessage());
+        }
+        
+        return 0;
+    }
+    
     public static boolean removeMember(int teamId, int userId) {
         Connection conn = DatabaseManager.getConnection();
         
@@ -275,5 +295,39 @@ public class TeamDAO {
         }
         
         return false;
+    }
+    
+    public static List<Team> getAllTeams() {
+        List<Team> teams = new ArrayList<>();
+        Connection conn = DatabaseManager.getConnection();
+        
+        if (conn == null) {
+            System.out.println("Database connection is null!");
+            return teams;
+        }
+        
+        String sql = "SELECT * FROM teams ORDER BY created_date DESC";
+        
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while (rs.next()) {
+                teams.add(new Team(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("description"),
+                    rs.getString("skills"),
+                    rs.getInt("max_members"),
+                    rs.getInt("admin_id"),
+                    rs.getString("created_date")
+                ));
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error getting all teams: " + e.getMessage());
+            e.printStackTrace();
+        }
+        
+        return teams;
     }
 }

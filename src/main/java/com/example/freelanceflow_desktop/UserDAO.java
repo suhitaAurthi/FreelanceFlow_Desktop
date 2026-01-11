@@ -94,4 +94,34 @@ public class UserDAO {
         }
         return false;
     }
+    
+    public static User getUserById(int userId) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        
+        Connection conn = DatabaseManager.getConnection();
+        if (conn == null) {
+            System.err.println("Database connection is null!");
+            return null;
+        }
+        
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                return user;
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting user by ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
